@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import f2 from '../assets/fotos/f2.jpg';
+import f4 from '../assets/fotos/f4.jpg';
+import f5 from '../assets/fotos/f5.jpg';
+---
+<section id="obrador" aria-labelledby="obr-t" class="scroll-mt-20">
+  <div class="mx-auto grid max-w-[84rem] gap-12 px-4 py-20 sm:px-8 sm:py-28 lg:grid-cols-12">
+    <div class="lg:col-span-6">
+      <p class="label text-corteza" data-reveal>El obrador</p>
+      <h2 id="obr-t" class="titol mt-4 text-[clamp(2.3rem,5vw,4.2rem)]" data-reveal style="--i:1">Una micropanadería en <em>Valencia de Alcántara.</em></h2>
+      <div class="mt-7 max-w-xl space-y-4 text-lg text-gris" data-reveal style="--i:2">
+        <p>Cada vez más personas sufren intolerancias al pan. Y a veces no es el pan, sino el tipo de pan que comemos: harinas tratadas y mejorantes para acelerar un proceso que deja de ser natural.</p>
+        <p>Aquí respetamos los tiempos. Nuestra masa madre es de cultivo propio y la adaptamos a cada pan, sin levaduras industriales ni aditivos. Trabajamos bajo pedido para garantizar la frescura y evitar el desperdicio.</p>
+        <p class="font-semibold text-carbon">Cada vez que compras en La Tahona Chica haces que este proyecto siga vivo.</p>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-6" data-reveal>
+      <Image src={f2} alt="Miga de una hogaza de pasas y nueces" widths={[400, 700]} sizes="(min-width: 1024px) 24vw, 46vw" class="row-span-2 h-full w-full rounded-2xl object-cover" />
+      <Image src={f4} alt="Regañas de sésamo" widths={[400, 700]} sizes="(min-width: 1024px) 24vw, 46vw" class="aspect-square w-full rounded-2xl object-cover" />
+      <Image src={f5} alt="Pieza dulce recién horneada" widths={[400, 700]} sizes="(min-width: 1024px) 24vw, 46vw" class="aspect-square w-full rounded-2xl object-cover" />
+    </div>
+  </div>
+  <div class="paper">
+    <div class="mx-auto grid max-w-[84rem] gap-6 px-4 py-14 sm:px-8 lg:grid-cols-12 lg:items-center">
+      <h3 class="titol text-3xl lg:col-span-4">Cómo conservar mejor tu pan</h3>
+      <p class="text-gris lg:col-span-8">Si lo vas a comer en 24 o 48 horas, guárdalo en una talega o panera, envuelto en un trapo, que mantiene su humedad. Si no, pídelo rebanado y congélalo en una bolsa hermética: cada rebanada estará como el primer día.</p>
+    </div>
+  </div>
+</section>

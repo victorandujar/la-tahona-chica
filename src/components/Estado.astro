@@ -1,0 +1,25 @@
+---
+/** Tarjeta viva con el estado de la carta. La rellena scripts/tienda.ts. */
+import { waUrl } from '../data/empresa';
+---
+<div data-estado class="rounded-2xl bg-carbon p-6 text-harina shadow-[0_30px_60px_-30px_rgb(0_0_0/0.55)] sm:p-7 fosc">
+  <p class="flex items-center gap-2.5">
+    <span data-punto class="relative inline-block size-3 rounded-full bg-trigo"></span>
+    <span data-titular class="label">La carta</span>
+  </p>
+  <p data-frase class="titol mt-4 text-[1.9rem] sm:text-[2.2rem]">&nbsp;</p>
+  <dl class="mt-5 grid grid-cols-2 gap-4 border-t border-harina/15 pt-5 text-sm">
+    <div><dt class="text-harina/60" data-l1>Cierra</dt><dd class="mt-0.5 text-base font-semibold" data-v1>—</dd></div>
+    <div><dt class="text-harina/60">Entrega</dt><dd class="mt-0.5 text-base font-semibold first-letter:uppercase" data-v2>—</dd></div>
+  </dl>
+  <a href="#carta" data-cta-abierta class="btn btn-trigo mt-6 w-full">Hacer mi pedido <span aria-hidden="true">→</span></a>
+  <a href={waUrl('Hola, avísame cuando abras la carta esta semana, por favor.')} target="_blank" rel="noopener" data-cta-cerrada hidden class="btn btn-trigo mt-6 w-full">Avísame cuando abra</a>
+</div>
+<style>
+  [data-estado][data-abierta="true"] [data-punto] { background: #6fd08c; }
+  [data-estado][data-abierta="true"] [data-punto]::after { content: ''; position: absolute; inset: -5px; border-radius: 999px; border: 2px solid #6fd08c; opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-estado][data-abierta="true"] [data-punto]::after { animation: late 2.2s ease-out infinite; }
+    @keyframes late { 0% { opacity: 0.8; transform: scale(0.6); } 100% { opacity: 0; transform: scale(1.6); } }
+  }
+</style>

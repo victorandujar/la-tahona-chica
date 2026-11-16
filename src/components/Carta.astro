@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { categorias, eur, productos } from '../data/productos';
+const fotos = import.meta.glob<{ default: ImageMetadata }>('../assets/productos/*.jpg', { eager: true });
+const foto = (n?: string) => (n ? fotos[`../assets/productos/${n}.jpg`]?.default : undefined);
+---
+<section id="carta" aria-labelledby="carta-t" class="scroll-mt-20">
+  <div class="mx-auto max-w-[84rem] px-4 py-20 sm:px-8 sm:py-28">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="label text-corteza" data-reveal>La carta de la semana</p>
+        <h2 id="carta-t" class="titol mt-4 text-[clamp(2.3rem,5vw,4.2rem)]" data-reveal style="--i:1">Elige tu <em>pan.</em></h2>
+      </div>
+      <p data-aviso-carta class="max-w-sm rounded-xl bg-crema px-4 py-3 text-sm text-gris" data-reveal style="--i:2">&nbsp;</p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filtrar la carta">
+      <button type="button" data-filtro="todo" aria-pressed="true" class="xip">Todo</button>
+      {categorias.map((c) => <button type="button" data-filtro={c.id} aria-pressed="false" class="xip">{c.nombre}</button>)}
+    </div>
+
+    <ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {productos.map((p) => {
+        const img = foto(p.foto);
+        return (
+          <li data-prod={p.id} data-cat={p.cat} class="flex flex-col overflow-hidden rounded-2xl border border-crema-2 bg-white">
+            {img ? (
+              <Image src={img} alt={p.nombre} widths={[430]} sizes="430px" loading="lazy" class="aspect-[4/3] w-full object-cover" />
+            ) : (
+              <div class="paper grid aspect-[4/3] w-full place-items-center" aria-hidden="true"><span class="titol px-6 text-center text-2xl text-carbon/35">Foto pendiente</span></div>
+            )}
+            <div class="flex flex-1 flex-col p-5">
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="titol text-[1.45rem] leading-[1.08]">{p.nombre}</h3>
+                <p class="shrink-0 font-mono text-[0.95rem] font-semibold tabular-nums">{eur(p.precio)}</p>
+              </div>
+              <details class="mt-3 text-sm text-gris">
+                <summary class="cursor-pointer font-semibold text-carbon underline-offset-4 hover:underline">Ingredientes y alérgenos</summary>
+                <p class="mt-2">{p.ingredientes}</p>
+                <p class="mt-1"><strong class="text-carbon">Alérgenos:</strong> {p.alergenos}</p>
+              </details>
+              {(p.formatos || p.rebanado) && (
+                <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+                  {p.formatos && (
+                    <label class="flex items-center gap-2">Formato
+                      <select data-formato class="rounded-md border border-crema-2 bg-white px-2 py-1.5 font-semibold">
+                        <option value="hogaza">Hogaza</option>
+                        <option value="molde">En molde</option>
+                      </select>
+                    </label>
+                  )}
+                  {p.rebanado && (
+                    <label class="flex min-h-9 cursor-pointer items-center gap-2"><input type="checkbox" data-rebanado class="size-[1.15rem] accent-corteza" /> Rebanado</label>
+                  )}
+                </div>
+              )}
+              <div class="mt-auto pt-5">
+                <button type="button" data-anadir class="btn btn-corteza w-full">Añadir al pedido</button>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+    <p class="mt-6 text-sm text-gris">Los panes pueden variar un poco de peso y forma de una semana a otra: es lo que tiene el pan hecho a mano.</p>
+  </div>
+</section>
+<style>
+  .xip { min-height: 2.6rem; padding: 0 1.05rem; border-radius: 999px; border: 1.5px solid var(--color-crema-2); font-weight: 600; font-size: 0.95rem; transition: background-color 200ms, color 200ms, border-color 200ms; }
+  .xip:hover { border-color: var(--color-carbon); }
+  .xip[aria-pressed="true"] { background: var(--color-carbon); border-color: var(--color-carbon); color: var(--color-harina); }
+</style>

@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Carta from '../components/Carta.astro';
+import Como from '../components/Como.astro';
+import Obrador from '../components/Obrador.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+import Pedido from '../components/Pedido.astro';
+import Schema from '../components/Schema.astro';
+const title = 'La Tahona Chica · Pan de masa madre bajo pedido en Valencia de Alcántara';
+const description = 'Micropanadería de masa madre en Valencia de Alcántara (Cáceres). Harinas ecológicas y más de 24 horas de fermentación. Pedidos de miércoles a viernes, entrega el lunes.';
+---
+<Base title={title} description={description}>
+  <Schema slot="head" description={description} />
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Carta />
+    <Como />
+    <Obrador />
+    <Contacto />
+  </main>
+  <Footer />
+  <Pedido />
+  <script>
+    import '../scripts/tienda';
+  </script>
+</Base>
