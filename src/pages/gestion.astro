@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import { productos } from '../data/productos';
+import { puntos } from '../data/empresa';
+---
+<Base title="Panel del obrador · La Tahona Chica" description="Panel de gestión de la hornada semanal (demostración).">
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <Header panel />
+  <main id="contenido" class="mx-auto max-w-[84rem] px-4 pb-24 pt-8 sm:px-8">
+    <p class="rounded-xl border border-trigo bg-[#fdf3d9] px-4 py-3 text-sm"><strong>Demostración del panel.</strong> Los pedidos marcados «ejemplo» son inventados. Los que hagas desde la web de la demo aparecen aquí, y todo se guarda solo en este navegador. <button type="button" data-reiniciar class="font-semibold underline underline-offset-4">Reiniciar la demo</button></p>
+
+    <div class="mt-8 flex flex-wrap items-end justify-between gap-6">
+      <div>
+        <p class="label text-corteza">Hornada de la semana</p>
+        <h1 class="titol mt-3 text-[clamp(2.2rem,5vw,3.8rem)]">Entrega del <em data-entrega>lunes</em></h1>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <p class="flex items-center gap-2.5 rounded-full bg-crema px-4 py-2.5 font-semibold"><span data-punto class="inline-block size-3 rounded-full bg-gris"></span><span data-carta-txt>Carta</span></p>
+        <button type="button" data-conmutar class="btn btn-carbon min-h-11 px-5 text-sm">Abrir la carta</button>
+        <a data-avisar href="#" target="_blank" rel="noopener" class="btn btn-line min-h-11 px-5 text-sm">Avisar por WhatsApp</a>
+      </div>
+    </div>
+
+    <dl class="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {[['pedidos', 'Pedidos'], ['piezas', 'Piezas a hornear'], ['cobrar', 'Por cobrar'], ['pendientes', 'Por entregar']].map(([k, t]) => (
+        <div class="rounded-2xl bg-white p-5 ring-1 ring-crema-2"><dt class="text-sm text-gris">{t}</dt><dd data-kpi={k} class="titol mt-1 text-4xl tabular-nums">0</dd></div>
+      ))}
+    </dl>
+
+    <div class="mt-8 grid gap-8 lg:grid-cols-12">
+      <section aria-labelledby="horn-t" class="lg:col-span-4">
+        <div class="fosc rounded-2xl bg-carbon p-6 text-harina lg:sticky lg:top-24">
+          <h2 id="horn-t" class="titol text-2xl">Lista de horneado</h2>
+          <p class="mt-1 text-sm text-harina/65">Lo que tienes que hacer esta semana, sumado.</p>
+          <ul data-horneado class="mt-5 divide-y divide-harina/12"></ul>
+          <button type="button" data-imprimir class="btn btn-trigo mt-6 min-h-11 w-full text-sm">Imprimir la lista</button>
+        </div>
+      </section>
+
+      <section aria-labelledby="ped-t" class="lg:col-span-8">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h2 id="ped-t" class="titol text-2xl">Pedidos</h2>
+          <div class="flex gap-2 text-sm" role="group" aria-label="Filtrar pedidos">
+            {[['todos', 'Todos'], ['confirmado', 'Por entregar'], ['entregado', 'Entregados']].map(([k, t], i) => (
+              <button type="button" data-ver={k} aria-pressed={i === 0 ? 'true' : 'false'} class="ver">{t}</button>
+            ))}
+          </div>
+        </div>
+        <ul data-pedidos class="mt-4 grid gap-3"></ul>
+
+        <details class="mt-8 rounded-2xl bg-white p-5 ring-1 ring-crema-2 sm:p-6">
+          <summary class="cursor-pointer text-lg font-semibold">+ Apuntar un pedido a mano</summary>
+          <p class="mt-2 text-sm text-gris">Para los que llegan por WhatsApp, Instagram o en persona: entran en la misma lista y suman a la lista de horneado.</p>
+          <form data-manual class="mt-5 grid gap-4" novalidate>
+            <div class="grid gap-4 sm:grid-cols-3">
+              <label class="block text-sm font-semibold">Nombre<input name="nombre" required maxlength="60" class="camp mt-1.5" /></label>
+              <label class="block text-sm font-semibold">Teléfono<input name="telefono" type="tel" maxlength="20" class="camp mt-1.5" /></label>
+              <label class="block text-sm font-semibold">Canal
+                <select name="canal" class="camp mt-1.5"><option value="whatsapp">WhatsApp</option><option value="instagram">Instagram</option><option value="persona">En persona</option></select>
+              </label>
+            </div>
+            <div data-filas class="grid gap-2"></div>
+            <template data-fila>
+              <div class="grid grid-cols-[1fr_4.5rem_auto] items-center gap-2">
+                <select data-m-prod class="camp" aria-label="Producto">{productos.map((p) => <option value={p.id}>{p.nombre}</option>)}</select>
+                <input data-m-qty type="number" min="1" max="20" value="1" class="camp" aria-label="Cantidad" />
+                <label class="flex items-center gap-1.5 text-sm"><input type="checkbox" data-m-reb class="size-[1.1rem] accent-corteza" /> Reb.</label>
+              </div>
+            </template>
+            <button type="button" data-otra class="w-fit text-sm font-semibold text-corteza underline underline-offset-4">+ Añadir otro producto</button>
+            <label class="block text-sm font-semibold">Punto de recogida
+              <select name="punto" class="camp mt-1.5">{puntos.map((p) => <option>{p}</option>)}</select>
+            </label>
+            <button type="submit" class="btn btn-corteza w-full sm:w-fit">Apuntar pedido</button>
+          </form>
+        </details>
+      </section>
+    </div>
+  </main>
+  <script>
+    import '../scripts/gestion';
+  </script>
+</Base>
+<style is:global>
+  .ver { min-height: 2.4rem; padding: 0 0.9rem; border-radius: 999px; border: 1.5px solid var(--color-crema-2); font-weight: 600; }
+  .ver[aria-pressed="true"] { background: var(--color-carbon); border-color: var(--color-carbon); color: var(--color-harina); }
+  @media print {
+    header, aside, [data-reiniciar], dl, #ped-t, [data-pedidos], details, [data-imprimir], .ver, main > p:first-child, main > div:first-of-type > div:last-child { display: none !important; }
+    .fosc { background: #fff !important; color: #000 !important; }
+  }
+</style>
