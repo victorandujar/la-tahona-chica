@@ -1,0 +1,70 @@
+---
+import { isDemo } from '../lib/site';
+import { puntos } from '../data/empresa';
+---
+<dialog data-pedido aria-labelledby="ped-t" class="pedido">
+  <div class="flex items-center justify-between gap-4 border-b border-crema-2 px-5 py-4 sm:px-7">
+    <h2 id="ped-t" class="titol text-2xl">Tu pedido</h2>
+    <button type="button" data-cerrar class="grid size-11 place-items-center rounded-full text-2xl hover:bg-crema" aria-label="Cerrar">×</button>
+  </div>
+
+  <!-- Paso 1: líneas y datos -->
+  <div data-paso="form" class="px-5 py-5 sm:px-7">
+    <p data-vacio class="rounded-xl bg-crema px-4 py-6 text-center text-gris">Todavía no has añadido nada. Elige en la carta.</p>
+    <ul data-lineas class="divide-y divide-crema-2"></ul>
+    <p data-total-fila hidden class="mt-4 flex items-baseline justify-between border-t-2 border-carbon pt-4"><span class="font-semibold">Total (se paga al recoger)</span><span data-total class="titol text-3xl tabular-nums">0,00 €</span></p>
+    <p data-entrega-linea hidden class="mt-2 text-sm text-gris"></p>
+
+    <form data-form hidden class="mt-6 grid gap-4" novalidate>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <label class="block text-sm font-semibold">Nombre
+          <input name="nombre" required autocomplete="given-name" maxlength="60" class="camp mt-1.5" />
+        </label>
+        <label class="block text-sm font-semibold">Teléfono
+          <input name="telefono" required type="tel" inputmode="tel" autocomplete="tel" maxlength="20" class="camp mt-1.5" />
+        </label>
+      </div>
+      <label class="block text-sm font-semibold">Punto de recogida
+        <select name="punto" class="camp mt-1.5">{puntos.map((p) => <option>{p}</option>)}</select>
+      </label>
+      <label class="block text-sm font-semibold">Nota <span class="font-normal text-gris">(opcional)</span>
+        <input name="nota" maxlength="140" class="camp mt-1.5" />
+      </label>
+      <p data-error hidden role="alert" class="rounded-lg bg-[#fbe9e4] px-4 py-3 text-sm font-semibold text-[#8a2a12]"></p>
+      <button type="submit" class="btn btn-corteza w-full">Confirmar pedido</button>
+      <p class="text-xs text-gris">{isDemo ? 'Esto es una demostración: el pedido no se envía a nadie y se guarda solo en este navegador.' : 'Usamos tus datos solo para preparar y entregarte el pedido.'}</p>
+    </form>
+  </div>
+
+  <!-- Paso 2: confirmación -->
+  <div data-paso="ok" hidden class="px-5 py-6 sm:px-7">
+    <p class="label text-verde">Pedido apuntado</p>
+    <p class="titol mt-3 text-3xl">¡Gracias, <span data-ok-nombre></span>!</p>
+    <div class="paper mt-5 rounded-2xl p-5">
+      <p class="text-sm text-gris">Tu código de recogida</p>
+      <p data-ok-codigo class="font-mono text-4xl font-bold tracking-[0.18em]">----</p>
+      <ul data-ok-lineas class="mt-4 space-y-1 border-t border-crema-2 pt-4 text-[0.95rem]"></ul>
+      <p class="mt-3 flex justify-between border-t border-crema-2 pt-3 font-semibold"><span>Total al recoger</span><span data-ok-total class="tabular-nums"></span></p>
+      <p data-ok-entrega class="mt-2 text-sm text-gris first-letter:uppercase"></p>
+    </div>
+    <a data-ok-wa href="#" target="_blank" rel="noopener" class="btn btn-carbon mt-5 w-full">Enviar el pedido por WhatsApp</a>
+    {isDemo && <a href="/gestion" class="btn btn-line mt-3 w-full">Ver cómo le llega al obrador →</a>}
+    <button type="button" data-cerrar class="mt-4 block w-full py-2 text-center text-sm font-semibold text-gris underline-offset-4 hover:underline">Seguir en la web</button>
+  </div>
+</dialog>
+
+<!-- Barra inferior en móvil -->
+<div data-barra hidden class="fixed inset-x-0 bottom-0 z-30 p-3 lg:hidden">
+  <button type="button" data-abrir-pedido class="btn btn-carbon w-full justify-between px-6 shadow-[0_12px_30px_-8px_rgb(0_0_0/0.5)]">
+    <span>Ver mi pedido · <span data-barra-piezas>0</span></span><span data-barra-total class="tabular-nums">0,00 €</span>
+  </button>
+</div>
+
+<style>
+  .pedido { width: min(34rem, 100vw); max-width: 100vw; max-height: 100dvh; margin: 0 0 0 auto; height: 100dvh; padding: 0; border: 0; background: var(--color-harina); color: var(--color-carbon); overflow-y: auto; }
+  .pedido::backdrop { background: rgb(40 41 44 / 0.55); }
+  @media (prefers-reduced-motion: no-preference) {
+    .pedido[open] { animation: entra 320ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+    @keyframes entra { from { transform: translateX(40px); opacity: 0; } }
+  }
+</style>

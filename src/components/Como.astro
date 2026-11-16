@@ -1,0 +1,37 @@
+---
+const pasos = [
+  { d: 'Miércoles', t: 'Abro la carta', x: 'Aviso por mensaje a los clientes de que ya se puede pedir.' },
+  { d: 'Hasta el viernes, 19:00', t: 'Haces tu pedido', x: 'Eliges tus panes, el formato y si los quieres rebanados.' },
+  { d: 'Fin de semana', t: 'Amaso y horneo', x: 'Más de 24 horas de fermentación. Por eso se pide con antelación.' },
+  { d: 'Lunes por la mañana', t: 'Recoges tu pan', x: 'En tu punto de entrega, y pagas al recoger.' },
+];
+const notas = [
+  { t: 'Esto es artesanía', x: 'El mismo que escribe estas palabras es quien hace todos los productos a mano. El pan se pide con dos días de antelación, y por eso la producción es limitada.' },
+  { t: 'Cada semana es única', x: 'Con los cambios de temperatura del obrador, los panes pueden variar ligeramente en peso y forma. Es lo que tiene un pan con alma y de verdad.' },
+  { t: 'Pídelo rebanado', x: 'Recomiendo pedir el pan rebanado: cambias el papel por una bolsa de congelación y tienes cada rebanada como el primer día.' },
+  { t: 'Esto es un inicio', x: 'La Tahona Chica nace pequeñita y espera ir creciendo de vuestra mano. Si ves algo que pueda mejorar, estaré encantado de leerte.' },
+];
+---
+<section id="como" aria-labelledby="como-t" class="fosc scroll-mt-20 bg-carbon text-harina">
+  <div class="mx-auto max-w-[84rem] px-4 py-20 sm:px-8 sm:py-28">
+    <p class="label text-trigo" data-reveal>Cómo funciona</p>
+    <h2 id="como-t" class="titol mt-4 max-w-3xl text-[clamp(2.3rem,5vw,4.2rem)]" data-reveal style="--i:1">Una hornada a la semana, <em>sin prisas.</em></h2>
+    <ol class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {pasos.map((p, i) => (
+        <li class="border-t-2 border-trigo pt-5" data-reveal style={`--i:${i}`}>
+          <p class="label text-trigo">{p.d}</p>
+          <h3 class="titol mt-3 text-[1.7rem]">{p.t}</h3>
+          <p class="mt-2 text-harina/75">{p.x}</p>
+        </li>
+      ))}
+    </ol>
+    <ul class="mt-16 grid gap-px overflow-hidden rounded-2xl bg-harina/15 sm:grid-cols-2">
+      {notas.map((n, i) => (
+        <li class="bg-carbon-2 p-6 sm:p-7" data-reveal style={`--i:${i % 2}`}>
+          <h3 class="font-semibold text-trigo">{n.t}</h3>
+          <p class="mt-2 text-harina/80">{n.x}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
