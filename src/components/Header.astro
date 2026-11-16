@@ -1,0 +1,32 @@
+---
+import Logo from '../assets/logo.svg?raw';
+import { empresa } from '../data/empresa';
+interface Props { panel?: boolean }
+const { panel = false } = Astro.props;
+---
+<header class="sticky top-0 z-40 border-b border-crema-2 bg-harina/94 backdrop-blur">
+  <div class="mx-auto flex h-[4.5rem] max-w-[84rem] items-center justify-between gap-4 px-4 sm:px-8">
+    <a href="/" class="flex items-center gap-3" aria-label={`${empresa.name}, inicio`}>
+      <span class="block w-[4.6rem] text-carbon [&_svg]:block [&_svg]:h-auto [&_svg]:w-full" set:html={Logo} />
+    </a>
+    {panel ? (
+      <p class="label text-gris">Panel del obrador</p>
+    ) : (
+      <nav aria-label="Principal" class="hidden lg:block">
+        <ul class="flex gap-7 font-semibold">
+          <li><a href="/#carta" class="hover:text-corteza">La carta</a></li>
+          <li><a href="/#como" class="hover:text-corteza">Cómo funciona</a></li>
+          <li><a href="/#obrador" class="hover:text-corteza">El obrador</a></li>
+          <li><a href="/#contacto" class="hover:text-corteza">Contacto</a></li>
+        </ul>
+      </nav>
+    )}
+    {panel ? (
+      <a href="/" class="btn btn-line min-h-11 px-5 text-sm">Ver la web</a>
+    ) : (
+      <button type="button" data-abrir-pedido class="btn btn-carbon min-h-11 px-5 text-sm">
+        Mi pedido <span data-cuenta class="grid min-w-6 place-items-center rounded-full bg-trigo px-1.5 text-xs font-bold text-carbon">0</span>
+      </button>
+    )}
+  </div>
+</header>

@@ -1,0 +1,16 @@
+---
+import Logo from '../assets/logo.svg?raw';
+import { empresa } from '../data/empresa';
+import { isDemo } from '../lib/site';
+---
+<footer class="border-t border-crema-2 bg-crema pb-24 text-gris lg:pb-0">
+  <div class="mx-auto grid max-w-[84rem] gap-6 px-4 py-12 sm:px-8 md:grid-cols-3 md:items-end">
+    <span class="block w-28 text-carbon [&_svg]:block [&_svg]:h-auto [&_svg]:w-full" set:html={Logo} />
+    <p class="text-sm">{empresa.name} · Micropanadería de masa madre · {empresa.postalCode} {empresa.city} ({empresa.region})</p>
+    <ul class="flex flex-wrap gap-5 text-sm md:justify-end">
+      {isDemo && <li><a href="/gestion" class="font-semibold text-carbon hover:text-corteza">Panel del obrador (demo)</a></li>}
+      <li><a href="/aviso-legal" class="hover:text-carbon">Aviso legal</a></li>
+      <li><a href="/privacidad" class="hover:text-carbon">Privacidad</a></li>
+    </ul>
+  </div>
+</footer>
